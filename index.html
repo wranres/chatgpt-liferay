@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChatGPT en Liferay</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+    #chat-container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+    #chat-box { height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #fafafa; margin-bottom: 10px; }
+    #chat-box div { margin-bottom: 8px; }
+    #input-container { display: flex; gap: 10px; }
+    input { flex: 1; padding: 10px; }
+    button { padding: 10px 20px; background: #0057a3; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #003d7a; }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <h2>🤖 ChatGPT Seguro</h2>
+    <div id="chat-box"></div>
+    <div id="input-container">
+      <input id="user-input" type="text" placeholder="Escribe tu mensaje..." />
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    const apiUrl = "https://hola.wranres.workers.dev"; // Reemplaza por tu Worker si es diferente
+    let messages = [{ role: "system", content: "Eres un asistente útil para el usuario." }];
+
+    function sendMessage() {
+      const input = document.getElementById("user-input");
+      const chatBox = document.getElementById("chat-box");
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      chatBox.innerHTML += `<div><strong>Tú:</strong> ${msg}</div>`;
+      input.value = "";
+
+      messages.push({ role: "user", content: msg });
+
+      fetch(https://hola.wranres.workers.dev/, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: messages
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const reply = data.choices?.[0]?.message?.content || "No hubo respuesta.";
+        messages.push({ role: "assistant", content: reply });
+        chatBox.innerHTML += `<div><strong>GPT:</strong> ${reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      })
+      .catch(err => {
+        chatBox.innerHTML += `<div><strong>Error:</strong> ${err.message}</div>`;
+      });
+    }
+  </script>
+</body>
+</html>
