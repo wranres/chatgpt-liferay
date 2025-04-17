@@ -24,7 +24,6 @@
     </div>
   </div>
 
-  <!-- 👇 Este script va al final, después del HTML -->
   <script>
     const apiUrl = "https://hola.wranres.workers.dev";
     let messages = [
@@ -38,7 +37,7 @@
       if (!msg) return;
 
       chatBox.innerHTML += `<div><strong>Tú:</strong> ${msg}</div>`;
-      chatBox.innerHTML += `<div id='typing'><em>GPT está escribiendo...</em></div>`;
+      chatBox.innerHTML += `<div id="typing"><em>GPT está escribiendo...</em></div>`;
       input.value = "";
       chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -57,20 +56,20 @@
         const reply = data.choices?.[0]?.message?.content || "No hubo respuesta.";
         messages.push({ role: "assistant", content: reply });
 
-        document.getElementById('typing').remove();
+        document.getElementById("typing").remove();
         chatBox.innerHTML += `<div><strong>GPT:</strong> ${reply}</div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
       })
       .catch(err => {
-        document.getElementById('typing').remove();
+        document.getElementById("typing").remove();
         chatBox.innerHTML += `<div><strong>Error:</strong> ${err.message}</div>`;
       });
     }
 
-    // Escuchar clic en botón
+    // ✅ Conectar botón
     document.getElementById("send-btn").addEventListener("click", sendMessage);
 
-    // Escuchar Enter en input
+    // ✅ También enviar con Enter
     document.getElementById("user-input").addEventListener("keypress", function (e) {
       if (e.key === "Enter") sendMessage();
     });
