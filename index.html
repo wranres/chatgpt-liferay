@@ -53,6 +53,7 @@
       })
       .then(res => res.json())
       .then(data => {
+        console.log("Respuesta completa del Worker:", data); //
         const reply = data.choices?.[0]?.message?.content || "No hubo respuesta.";
         messages.push({ role: "assistant", content: reply });
 
