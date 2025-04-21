@@ -66,12 +66,12 @@
       });
     }
 
-    // ✅ Conectar botón
-    document.getElementById("send-btn").addEventListener("click", sendMessage);
-
-    // ✅ También enviar con Enter
-    document.getElementById("user-input").addEventListener("keypress", function (e) {
-      if (e.key === "Enter") sendMessage();
+    // ✅ Activar eventos luego que el DOM está cargado
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("send-btn").addEventListener("click", sendMessage);
+      document.getElementById("user-input").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") sendMessage();
+      });
     });
   </script>
 </body>
